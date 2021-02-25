@@ -2,6 +2,7 @@ package com.gi.crm.tools;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -49,5 +50,15 @@ public class XPathParserTest {
         String result = parser.evaluateToXmlString(expression);
         assertNotNull(result);
         assertEquals(result, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><root><author>Stephen King</author><author>Ernest Hemingway</author></root>");
+    }
+
+    @Test
+    public void testEvaluateToNodeList() throws XPathExpressionException {
+        final String expression = "//book";
+        NodeList result = parser.evaluateToNodeList(expression);
+        assertNotNull(result);
+        assertEquals(result.getLength(),2);
+        String localName = result.item(1).getLocalName();
+        assertEquals(localName, "book");
     }
 }

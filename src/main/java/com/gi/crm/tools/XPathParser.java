@@ -100,7 +100,7 @@ public class XPathParser {
      * @return Xml String with the results
      * @throws XPathExpressionException     if there is an error with the expression
      * @throws ParserConfigurationException if there is an error building the xml doc
-     * @throws TransformerException if there is an error transforming the xml document to string
+     * @throws TransformerException         if there is an error transforming the xml document to string
      */
     public String evaluateToXmlString(String expression) throws XPathExpressionException, ParserConfigurationException, TransformerException {
         Document newXmlDocument = DocumentBuilderFactory.newInstance()
@@ -122,5 +122,15 @@ public class XPathParser {
         Transformer transformer = tf.newTransformer();
         transformer.transform(domSource, result);
         return writer.toString();
+    }
+
+    /**
+     * Evaluates an expression and returns a NodeList of matching nodes
+     * @param expression the XPath expression
+     * @return list of matches
+     * @throws XPathExpressionException if something is wrong with your expression
+     */
+    public NodeList evaluateToNodeList(String expression) throws XPathExpressionException {
+        return (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
     }
 }
